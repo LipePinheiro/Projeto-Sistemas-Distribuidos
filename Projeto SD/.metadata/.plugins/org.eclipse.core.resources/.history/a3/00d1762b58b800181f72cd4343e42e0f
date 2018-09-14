@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Snippet</title>
+
+
+
+	<meta name="viewport" content="width=device-width , initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+
+	<!-- JS para pagina em geral -->
+	<script src="Script/index.js"></script>
+
+	<!-- Css -->
+	<link rel="stylesheet" href="CSS/estilizacao.css">
+
+	<script>
+
+
+$(document).ready(function () {
+	
+	//Chamar utilizador da localSorage
+	var username = localStorage.getItem("username");
+	
+	$("#nomeUtilizador").append("Olá " + username);
+	
+	//Sair e limpar localStorage
+	$("#sair").click(function () {
+		localStorage.clear();
+			window.location.href = "index.html";
+	});
+	
+	var myToken;
+	if (localStorage.token == null) {
+		myToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ";
+	} else {
+		myToken = localStorage.token;
+	}
+
+	$("#btnAddExer").click(function () {
+		console.log("Entrei")
+		var title = $("#txttitle").val();
+		var language = $("#txtlinguagem").val();
+		var explanation = $("#txtexplicacao").val();
+		var tags =  $("#txttags").val();
+		var code =  $("#txtcodigo").val();
+		var output = $("#txtoutput").val()
+		if(title == "" || language == "" || explanation == "" || tags == "" || code == "" || output == "") {
+			alert("Preencha todos os campos para adicionar!")
+		} else {
+			$.ajax(
+					{
+					method: "POST",
+					url:  "http://localhost:8080/ExerciciosProgramacao/rest/exercises",
+					data: {
+						title: title,
+						language: language,
+						explanation: explanation,
+						tags: tags,
+						code: code,
+						output: output,
+						token: myToken
+					}
+				})
+				.done(function (msg) {
+					alert("Exercicio Criado!");	
+					localStorage.setItem("token",msg);
+					window.location.href = "home.html"
+					
+				});
+		}
+		
+	});
+});
+
+
+/**
+ * Plugin designed for test prupose. It add a button (that manage an alert) and a select (that allow to insert tags) in the toolbar.
+ * This plugin also disable the "f" key in the editarea, and load a CSS and a JS file
+ */  
+var EditArea_test= {
+	/**
+	 * Get called once this file is loaded (editArea still not initialized)
+	 *
+	 * @return nothing	 
+	 */	 	 	
+	init: function(){	
+		//	alert("test init: "+ this._someInternalFunction(2, 3));
+		editArea.load_css(this.baseURL+"css/test.css");
+		editArea.load_script(this.baseURL+"test2.js");
+	}
+	/**
+	 * Returns the HTML code for a specific control string or false if this plugin doesn't have that control.
+	 * A control can be a button, select list or any other HTML item to present in the EditArea user interface.
+	 * Language variables such as {$lang_somekey} will also be replaced with contents from
+	 * the language packs.
+	 * 
+	 * @param {string} ctrl_name: the name of the control to add	  
+	 * @return HTML code for a specific control or false.
+	 * @type string	or boolean
+	 */	
+	,get_control_html: function(ctrl_name){
+		switch(ctrl_name){
+			case "test_but":
+				// Control id, button img, isFileSpecific, command
+				return parent.editAreaLoader.get_button_html('test_but', 'test.gif', 'test_cmd', false, this.baseURL);
+			case "test_select":
+				html= "<select id='test_select' onchange='javascript:editArea.execCommand(\"test_select_change\")'>"
+					+"			<option value='-1'>{$test_select}</option>"
+					+"			<option value='h1'>h1</option>"
+					+"			<option value='h2'>h2</option>"
+					+"			<option value='h3'>h3</option>"
+					+"			<option value='h4'>h4</option>"
+					+"			<option value='h5'>h5</option>"
+					+"			<option value='h6'>h6</option>"
+					+"		</select>";
+				return html;
+		}
+		return false;
+	}
+	/**
+	 * Get called once EditArea is fully loaded and initialised
+	 *	 
+	 * @return nothing
+	 */	 	 	
+	,onload: function(){ 
+		alert("test load");
+	}
+	
+	/**
+	 * Is called each time the user touch a keyboard key.
+	 *	 
+	 * @param (event) e: the keydown event
+	 * @return true - pass to next handler in chain, false - stop chain execution
+	 * @type boolean	 
+	 */
+	,onkeydown: function(e){
+		var str= String.fromCharCode(e.keyCode);
+		// desactivate the "f" character
+		if(str.toLowerCase()=="f"){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Executes a specific command, this function handles plugin commands.
+	 *
+	 * @param {string} cmd: the name of the command being executed
+	 * @param {unknown} param: the parameter of the command	 
+	 * @return true - pass to next handler in chain, false - stop chain execution
+	 * @type boolean	
+	 */
+	,execCommand: function(cmd, param){
+		// Handle commands
+		switch(cmd){
+			case "test_select_change":
+				var val= document.getElementById("test_select").value;
+				if(val!=-1)
+					parent.editAreaLoader.insertTags(editArea.id, "<"+val+">", "</"+val+">");
+				document.getElementById("test_select").options[0].selected=true; 
+				return false;
+			case "test_cmd":
+				alert("user clicked on test_cmd");
+				return false;
+		}
+		// Pass to next handler in chain
+		return true;
+	}
+	
+	/**
+	 * This is just an internal plugin method, prefix all internal methods with a _ character.
+	 * The prefix is needed so they doesn't collide with future EditArea callback functions.
+	 *
+	 * @param {string} a Some arg1.
+	 * @param {string} b Some arg2.
+	 * @return Some return.
+	 * @type unknown
+	 */
+	,_someInternalFunction : function(a, b) {
+		return a+b;
+	}
+};
+	</script>
+
+</head>
+
+<body>
+
+	<div class="container">
+		<p class="round1" id="Descubra"></p>
+		<center>
+		<div class="row" style="margin-top: 100px">
+			<h1>Adiciona o Teu Exercicio</h1>
+		</div>
+</center>
+		 <!-- NAVBAR -->
+        <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="padding:10px;background-color:rgba(255,255,255,0.5)">
+            <div class="collapse navbar-collapse w3-container">
+
+                <ul class="nav navbar-nav" ">
+                  
+					<a href="home.html">
+					<h1>
+							Exercícios de Programação
+					</h1>
+						</a>
+                </ul>
+         
+                <!-- Navegação -->
+                <ul class="nav navbar-nav navbar-right">
+                 <li >
+                    <a> <span class="glyphicon glyphicon-user" id="nomeUtilizador"> </span>
+                    </a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="home.html">Home</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="perfil.html">Editar Perfil</a>
+                    </li>
+                    <li>
+                        <a>
+                            <span id="sair" class="glyphicon glyphicon-log-in"></span> Sair</a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <!-- Fim de navbar -->
+
+		<div class="customHr" id="sugest" style="margin-top: 50px">.</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row" id="bigDiv">
+					<div class="row" id="snippetInfo">
+						<div class="col-md-12" id="snipBar">
+							<div class="row" id="snipList" style="margin-left: 10px; margin-right: 10px">
+								<form id="newSnipForm">
+									<div class='form-group'>
+										<div class="row">
+											<br>
+											<div class="col-md-3">
+												<label for='txttitle' class='sr-onl'>Titulo </label>
+											</div>
+											<div class="col-md-9">
+												<input id='txttitle' style='width: 300px; margin-left: 10px' required='' class='form-control' name='txttitle'>
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class='form-group'>
+										<div class="row">
+											<br>
+											<div class="col-md-3">
+												<label for='language' class='sr-onl'>Linguagem de Programação </label>
+											</div>
+											<div class="col-md-9">
+												<input id='txtlinguagem' style='width: 300px; margin-left: 10px' required='' class='form-control' name='title'>
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class='form-group'>
+										<div class="row">
+											<div class="col-md-3">
+												<label for='txtexplicacao' class='sr-onl'>Explicacão</label>
+											</div>
+											<div class="col-md-9">
+												<textarea id='txtexplicacao' name="Explicacao" class='form-control' style="height: 300px; width: 700px; margin-left: 10px"></textarea>
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class='form-group'>
+										<div class="row">
+											<div class="col-md-3">
+												<label for='txttags' class='sr-onl'>Tags</label>
+											</div>
+											<div class="col-md-9">
+												<input id='txttags' style="width: 300px; margin-left: 10px" required='' placeholder='Tag' class='form-control' name='txttags'>
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class='form-group'>
+										<div class="row">
+											<div class="col-md-3">
+												<label for='txtcodigo' class='sr-onl'>Código de Programação</label>
+											</div>
+											<div class="col-md-9">
+												<textarea id='txtcodigo' name="txtcodigo" class='form-control' style="height: 500px; width: 700px; margin-left: 10px"></textarea>
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class='form-group'>
+										<div class="row">
+											<div class="col-md-3">
+												<label for='txtoutput' class='sr-onl'>Output</label>
+											</div>
+											<div class="col-md-9">
+												<input id='txtoutput' style="width: 300px; margin-left: 10px" placeholder='Language' class='form-control'
+												 name='txtoutput'>
+											</div>
+										</div>
+									</div>
+									<br>
+									<br>
+									<div class='form-group'>
+										<!-- <center> -->
+										<button id="btnAddExer" style="width: 300px" class='btn btn-success form-control'>Adicionar Exercicio
+										</button>
+										<!-- </center> -->
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+
+</html>

@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    $('#videoModal').modal('show');
     $("#registo").button().on("click", function () {
     $('#registoModal').modal('show');
     });

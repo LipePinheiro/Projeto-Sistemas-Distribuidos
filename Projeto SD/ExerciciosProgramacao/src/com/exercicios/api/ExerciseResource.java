@@ -67,9 +67,10 @@ public class ExerciseResource {
 			
 
 			Jwts.parser().setSigningKey(userManager.getKey()).parseClaimsJws(token);
-			exerciseManager.removeExercise(title);
 			
-
+			
+			String login = (String) Jwts.parser().setSigningKey(userManager.getKey()).parseClaimsJws(token).getBody().get("username");
+			exerciseManager.removeExercise(title, login);
 			return Response.ok().entity("Exercise removed!").build();
 		}
 		catch(SignatureException e){

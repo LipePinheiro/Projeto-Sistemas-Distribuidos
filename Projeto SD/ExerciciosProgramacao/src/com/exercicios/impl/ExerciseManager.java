@@ -61,10 +61,23 @@ return exerciseManager;
 	}
 	
 	//Remover Exercicio
-		public void removeExercise(String title) {
-			System.out.println("cheguei aqui " + title);
-			ExerciseData exercisedata = ExerciseData.getInstance();			
-			exercisedata.removeData(title);
+		public Response removeExercise(String title, String login) {
+			List<Exercise> exercicio = ExerciseData.getInstance().getData(title);
+			String userExercise = null;
+			for (Exercise exercicios : exercicio) {
+				userExercise = exercicios.user.getUsername();
+			}
+			// CHECKS IF THE USER LOGGED IS THE AUTHOR OF THE EXERCISE
+			if (login.equals(userExercise)) {
+				ExerciseData exercisedata = ExerciseData.getInstance();
+				
+				return exercisedata.removeData(title);
+				
+			} else {
+				System.out.println("Não pode remover um exercicio de outro utilizador!");
+			}
+			return null;
+		
 		}
 
 

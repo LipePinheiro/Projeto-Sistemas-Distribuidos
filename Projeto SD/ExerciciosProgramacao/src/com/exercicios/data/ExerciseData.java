@@ -49,9 +49,10 @@ return exerciseData;
 	}
 
 	//remover
-	public void removeData(String title) {
+	public Response removeData(String title) {
 		System.out.println("Data = " + title);
 		colExercises.deleteOne(eq("title", title));
+		return null;
 	}
 	
 	//get exercicios
@@ -93,4 +94,7 @@ return exerciseData;
 		return exercises;
 
 	}
+
+	
+
 }

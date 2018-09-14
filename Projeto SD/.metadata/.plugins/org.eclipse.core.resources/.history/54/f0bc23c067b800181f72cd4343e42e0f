@@ -1,0 +1,104 @@
+package com.exercicios.impl;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.ws.rs.core.Response;
+
+import com.exercicios.data.ExerciseData;
+import com.exercicios.model.Exercise;
+import com.exercicios.model.Solutions;
+import com.exercicios.model.User;
+
+public class ExerciseManager {
+
+	static ExerciseManager exerciseManager = null;
+	static List<Exercise> exercises = new ArrayList<Exercise>();
+	public static ExerciseManager getInstance() {
+		if (exerciseManager == null) {
+			exerciseManager = new ExerciseManager();
+
+		}
+return exerciseManager;
+	}
+	
+	
+	public void createExercise(String title, String author, String explanation, String tags, String code, String language,
+			String output) {
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+
+		String creationDate = dateFormat.format(date);
+		System.out.println(dateFormat.format(date)); // 2018/08/10 15:30:43
+		
+		List<User> users = UserManager.getInstance().getUser(author);
+
+		String username = null;
+		String password = null;
+		String email = null;
+		String name = null;
+
+		for (User user : users) {
+			username = user.getUsername();
+			password = user.getPassword();
+			email = user.getEmail();
+			name = user.getName();
+		}
+		User user = new User(username, password, email, name);
+		
+		
+		Solutions solution = new Solutions(code, language, output);
+		
+		ExerciseData exerciseData = ExerciseData.getInstance();
+		exerciseData.createExercise(new Exercise(creationDate, user, title, explanation, tags,
+				solution));
+		
+	}
+	
+	//Remover Exercicio
+		public void removeExercise(String title, String login) {
+			List<Exercise> exercicio = ExerciseData.getInstance().getData(title);
+			String userExercise = null;
+			for (Exercise exercicios : exercicio) {
+				userExercise = exercicios.user.getUsername();
+			}
+			// CHECKS IF THE USER LOGGED IS THE AUTHOR OF THE EXERCISE
+			if (login.equals(userExercise)) {
+				ExerciseData exercisedata = ExerciseData.getInstance();
+				
+				return exercisedata.removeData(title);
+				
+			} else {
+				System.out.println("VOCE NAO PODE REMOVER ESTE EXERCISE PQ NAO TEM PERMISSOES");
+			}
+			return null;
+			System.out.println("cheguei aqui " + title);
+			ExerciseData exercisedata = ExerciseData.getInstance();			
+			exercisedata.removeData(title);
+		}
+
+
+	//Get todos os exercicios
+		public List<Exercise> getExercises( ) {
+			ExerciseData exerciseData = ExerciseData.getInstance();				
+			return exerciseData.getData();
+		}
+
+		
+		public List<Exercise> getExercises(String pesquisa) {
+			ExerciseData exerciseData = ExerciseData.getInstance();				
+			return exerciseData.getData(pesquisa);
+		}
+
+		public List<Exercise> getExercisesUser(String pesquisa) {
+			ExerciseData exerciseData = ExerciseData.getInstance();				
+			return exerciseData.getDataUser(pesquisa);
+		}
+
+
+}

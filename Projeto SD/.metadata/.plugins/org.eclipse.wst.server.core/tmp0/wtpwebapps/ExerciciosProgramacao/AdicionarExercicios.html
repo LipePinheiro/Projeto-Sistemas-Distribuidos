@@ -70,9 +70,9 @@ $(document).ready(function () {
 					}
 				})
 				.done(function (msg) {
-					console.log("Token: "+ msg)
-					alert("Exercicio Criado!");
+					alert("Exercicio Criado!");	
 					localStorage.setItem("token",msg);
+					window.location.href = "home.html"
 					
 				});
 		}
