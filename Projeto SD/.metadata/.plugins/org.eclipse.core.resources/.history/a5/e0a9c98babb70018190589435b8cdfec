@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Exercicios de Programação</title>
+
+	<meta name="viewport" content="width=device-width , initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+
+	<!-- JS para pagina em geral -->
+	<script src="Script/index.js"></script>
+
+	<!-- Css -->
+	<link rel="stylesheet" type="text/css" href="CSS/estilizacao.css">
+	<script>
+    
+    $(document).ready(function(){
+    	
+    	var myToken;
+		if (localStorage.token == null) {
+			myToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ";
+		} else {
+			myToken = localStorage.token;
+		}
+    	
+    	$("#btnLog").click(function(){
+    		localStorage.setItem("username",$("#username").val());
+    		var username = $("#username").val();
+        	var password =  $("#password").val();
+        	if(username == "" || password=="" )
+			{
+			alert("Por favor preencha todos os campos!");
+			}else
+			{
+    		$.ajax({
+    			  method: "POST",
+    			  url: "http://localhost:8080/ExerciciosProgramacao/rest/users/auth",
+    			  data: { 
+    				  username: username,
+    				  password: password,
+    			  }
+    			})
+    		  .done(function( msg ) {
+    		      console.log("Token: " + msg);
+    		      alert("Login efetuado com sucesso!");
+    		      localStorage.setItem("token", msg);
+    		      window.location.href = "home.html";
+    		  });
+    		.fail(function() {
+    		    alert( "error" );
+    		  });
+			}
+    	});
+   
+    
+    $("#btnRegist").click(function(){
+    	
+    	var username = $("#registUsername").val();
+    	var password = $("#registPassword").val();
+    	var email = $("#registEmail").val();
+    	var name = $("#registNome").val();
+    	
+
+		if(username == "" || password=="" || email=="" ||name=="")
+			{
+			alert("Por favor preencha todos os campos!");
+			}else
+			{
+		
+		$.ajax({
+			  method: "POST",
+			  url: "http://localhost:8080/ExerciciosProgramacao/rest/users",
+			  data: { 
+				  username: username,
+				  password: password,
+				  email: email,
+				  name: name,
+		
+			  }
+			})
+		  .done(function( msg ) {
+		      console.log("Token: " + msg)
+		      alert("Foi registado com sucesso!");
+		      localStorage.setItem("token", msg);
+		      window.location.href = "index.html";
+		      
+		  });
+			}
+	});
+});
+    
+    </script>
+
+</head>
+
+<body>
+
+	<div class="container">
+		<p class="round1" id="Descubra"></p>
+		
+		<div class="row" style="margin-top:100px">
+			<div class="jumbotron">
+				<h2>
+				<b>Exercícios de Programação</b>					
+				</h2>
+				<p>
+					Este WebSite está pronto para resolver todos os teus problemas na contrução do teu código.
+					Vê os nosso exemplos de exercícios para te ajudar com as tuas dúvias.
+					Regista-te e vê todos os exercicios existentes!!!
+				</p>
+			</div>
+		</div>
+		<center>
+
+			<!-- Fim Modal -->
+
+			<!-- Modal Registo -->
+			<div class="modal fade" id="registoModal" tabindex="-1" role="dialog" aria-labelledby="registoModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content" style="width:350px;height:500px;background-color:rgba(255,255,255,1)">
+						<div class="modal-header">
+							<h3 style="color:grey">Registo de novo utilizador</h3>
+						</div>
+						<div class="modal-body">
+							<form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+								<div class="form-group">
+									<label for='registEmail' class='sr-onl'>Email</label>
+									<input id='registEmail' type='email' required='' placeholder='Email' class='form-control' name='registEmail'>
+								</div>
+
+								<div class="form-group">
+									<label for='registNome' class='sr-onl'>Nome</label>
+									<input id='registNome' type='text' required='' placeholder='Nome' class='form-control' name='registNome'>
+								</div>
+								<div class="form-group">
+									<label for='registPassword' class='sr-onl'>Palavra Passe</label>
+									<input id='registPassword' type='password' required='' placeholder='Password' class='form-control' name='registPassword'>
+								</div>
+								<div class="form-group">
+									<label for='registUsername' class='sr-onl'>Nome de Utilizador</label>
+									<input id='registUsername' type='username' required='' placeholder='Username' class='form-control' name='registUsername'>
+								</div>
+								<div class="form-group">
+									<button id="btnRegist" class="btn btn-success form-control" data-dismiss="modal">Registar</button>
+								</div>
+								<div class="form-group">
+									<button type="button" class="btn btn-danger form-control" data-dismiss="modal">Cancelar</button>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fim Modal -->
+		</center>
+		<!-- NAVBAR -->
+		<nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="padding:10px;background-color:rgba(255,255,255,0.5)">
+			<div class="collapse navbar-collapse w3-container">
+
+				<ul class="nav navbar-nav">
+					<h1>
+						Exercícios de Programação
+					</h1>
+				</ul>
+
+				<!-- Navegação -->
+				<ul class="nav navbar-nav navbar-right">
+		
+					<li>
+						<a class="page-scroll" href="exercicios.html">Exercicios</a>
+					</li>
+					<!-- Form Login -->
+					
+					<li id="loginnav" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<b>Login</b>
+							<span class="caret"></span>
+						</a>
+						<ul id="login-dp" class="dropdown-menu" style="width:200px;padding:5px">
+							<li>
+								<div class="row">
+									<div class="col-md-12">
+										<form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+											<div class="form-group">
+												<label for='username' class='sr-only'>Nome de Utilizador</label>
+												<input id='username' type='username' required='' placeholder='Username' class='form-control' name='username'>
+											</div>
+											<div class="form-group">
+												<label for='password' class='sr-only'>Palavra Passe</label>
+												<input id='password' type='password' required='' placeholder='Password' class='form-control' name='password'>
+											</div>
+											<div class='form-group'>
+												<button id="btnLog" class='btn btn-primary btn-block'>Iniciar Sessão</button>
+											</div>
+
+										</form>
+									</div>
+									<div class="bottom text-center">
+										Não Tens Conta?
+										<button class="btn btn-info btn-xs" id="registo">
+											<b>Registar!</b>
+										</button>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<!--Fim Login -->
+				</ul>
+			</div>
+		</nav>
+		<!-- Fim de navbar -->
+</body>
+
+</html>

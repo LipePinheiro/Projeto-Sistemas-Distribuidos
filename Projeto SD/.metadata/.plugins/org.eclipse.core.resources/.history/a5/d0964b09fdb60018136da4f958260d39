@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercicios de Programação</title>
+
+
+
+    <meta name="viewport" content="width=device-width , initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+
+    <!-- JS para pagina em geral -->
+    <script src="Script/index.js"></script>
+
+    <!-- Css -->
+    <link rel="stylesheet" href="CSS/estilizacao.css">
+
+<script>
+function getreload()    {
+	var nome = localStorage.getItem("username");
+	document.getElementById('editUsername').innerHTML = nome;
+
+	}
+	
+$(document).ready(function () {
+	
+	//Chamar utilizador da localSorage
+	var username = localStorage.getItem("username");
+	$("#nomeUtilizador").append("Olá " + username);
+	
+	var nome = $("#editUsername");
+	nome.append($("<input disabled class='form-control' name='registUsername'>").val(username).text(username));
+//Editar dados do utilizador
+
+$("#btnEditar").click(function () {
+	var myToken;
+	if (localStorage.token == null) {
+		myToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ";
+	} else {
+		myToken = localStorage.token;
+	}
+    username = localStorage.getItem("username");
+    console.log("perfil " + username);
+    var url = ""
+    $.ajax({
+        method: "PUT",
+        url: "http://localhost:8080/ExerciciosProgramacao/rest/users/" + username,
+        data: {
+			password: $("#editPassword").val(),
+			email: $("#editEmail").val(),
+			name: $("#editNome").val(),
+            token: myToken
+        }
+    })
+        .done(function (data) {
+        	console.log("Alterado")
+        });
+});
+});
+</script>
+   
+
+</head>
+
+<style>
+#edit{
+align: center;
+margin: 25%;
+}
+</style>
+<body>
+
+    <div class="container">
+        <p class="round1" id="Descubra"></p>
+        <div class="customHr " style="margin-top: 100px">.</div>
+        <center>
+        <div class="row">
+            <h2>Editar Perfil</h2>
+
+        </div>
+    </center>
+        <!-- NAVBAR -->
+        <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="padding:10px;background-color:rgba(255,255,255,0.5)">
+            <div class="collapse navbar-collapse w3-container">
+
+                <ul class="nav navbar-nav" ">
+                  
+                        <h1 href="Snippets.html">
+                            Snippet world
+                        </h1>
+
+                    
+
+                </ul>
+         
+                <!-- Navegação -->
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <a class="page-scroll" href="Snippets.html">Snippets</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="AdicionarExercicios.html">Adicionar Snippets</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Fim de navbar -->
+
+        
+        <div class="customHr" id="sugest" style="margin-top: 50px">.</div>
+     <center>
+        <div class="row" id="edit">
+    
+           <form class="form" role="form" method="put"  accept-charset="UTF-8">
+           		<div class="form-group">
+					<label for='editNome' class='sr-onl'>Nome</label>
+					<input id='editNome' type='text' required='' placeholder='Nome' class='form-control' name='editNome'>
+				</div>
+           		<div class="form-group">
+					<label for='editUsername' class='sr-onl'>Nome de Utilizador</label>
+					<p id='editUsername'></p>
+				</div>
+				<div class="form-group">
+					<label for='editEmail' class='sr-onl'>Email</label>
+					<input id='editEmail' type='email' required='' placeholder='Email' class='form-control' name='editEmail'>
+				</div>
+
+				<div class="form-group">
+					<label for='editPassword' class='sr-onl'>Palavra Passe</label>
+					<input id='editPassword' type='password' required='' placeholder='Password' class='form-control' name='editPassword'>
+				</div>
+				
+				<div class="form-group">
+					<button id="btnEditar" class="btn btn-success form-control">Editar</button>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-danger form-control">Cancelar</button>
+				</div>
+        </div>
+        </center>
+</body>
+
+</html>

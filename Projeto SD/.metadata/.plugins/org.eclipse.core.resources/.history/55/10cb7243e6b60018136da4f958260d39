@@ -1,0 +1,105 @@
+package com.exercicios.api;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
+
+import com.exercicios.impl.UserManager;
+import com.exercicios.model.User;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+
+@Path("/users")
+public class UserResource {
+	
+	
+
+	// Login
+
+	@Path("/auth")
+	@POST
+	public Response auth(@FormParam("username") String username, @FormParam("password") String password) {
+		UserManager userm = UserManager.getInstance();
+		if (UserManager.checkCredentials(username, password)) {
+
+			
+
+			Map<String, Object> user = new HashMap<String, Object>();
+			user.put("username", username);
+
+			// Create JWT token
+			String newToken = Jwts.builder().setClaims(user).setIssuer("exercicios")
+					.signWith(SignatureAlgorithm.HS512, userm.getKey()).compact();
+
+			return Response.ok().entity(newToken).build();
+		} else {
+			return Response.serverError().status(401).type("text/plain").entity("User Inválido!").build();
+		}
+	}
+	
+
+	// GET ALL USERS
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<User> getUsers(@QueryParam("username") String username) {
+
+		UserManager userManager = UserManager.getInstance();
+		if (username!=null) {
+			return userManager.getUsers(username);
+		} 
+		return userManager.getUsers();
+	}
+	
+	// POST A NEW USER
+		@POST
+		@Consumes("application/x-www-form-urlencoded")
+		public Response insertUser(@FormParam("username") String username, @FormParam("email") String email,
+				@FormParam("password") String password, @FormParam("name") String name, @Context UriInfo uriInfo) {
+
+			UserManager userm = UserManager.getInstance();
+
+			userm.createUser(username, email, password, name);
+
+			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+			builder.path(username);
+			return Response.created(builder.build()).build();
+
+		}
+		
+		//Put User
+		
+		@PUT
+		@Path("/{username}")
+		@Consumes("application/x-www-form-urlencoded")
+		public Response updateUser(
+				@PathParam("email") String email,
+				@FormParam("name") String name,
+				@FormParam("password") String password,
+				@FormParam("username") String username,
+				@Context UriInfo uriInfo) {
+			UserManager userManager = UserManager.getInstance();
+			userManager.update(email, name, password, username, username);
+			UriBuilder builder = uriInfo.getAbsolutePathBuilder();	
+			builder.path(username);
+			return Response.created(builder.build()).build();
+		}
+		
+	
+}

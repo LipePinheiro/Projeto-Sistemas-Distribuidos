@@ -1,0 +1,15 @@
+package com.exercicios.model;
+
+public class Exercise {
+	
+	public String creationDate;
+	public String title;	
+	public String explanation;
+	public String tags;
+	public Solutions solution;
+	
+
+
+
+
+}

@@ -1,0 +1,81 @@
+package com.exercicios.impl;
+
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.core.Response;
+
+import com.exercicios.data.UserData;
+import com.exercicios.model.User;
+
+import io.jsonwebtoken.impl.crypto.MacProvider;
+
+public class UserManager {
+	
+	static List<User> users = new ArrayList<User>();
+	static Key key;
+
+	static UserManager userManager = null;
+	
+	public static UserManager getInstance() {
+		if (userManager == null) {
+			userManager = new UserManager();
+			key = MacProvider.generateKey();
+		}
+		return userManager;
+	}
+	
+	public Key getKey() {
+		return key;
+	}
+	
+	// GET ALL USERS
+		public List<User> getUsers() {
+			UserData userData = UserData.getInstance();
+			
+			
+			return userData.getUsers();
+		}
+
+		public static boolean checkCredentials(String username, String password) {
+			
+			UserData userData = UserData.getInstance();
+			return userData.checkCredentials(username, password);
+			
+		}
+
+		
+		public List<User> getUsers(String param) {
+			UserData userdata = UserData.getInstance();				
+			return userdata.getData(param);
+		}	
+		
+		public void createUser(String username, String email, String password, String name) {
+			
+			UserData userData = UserData.getInstance();
+			
+
+			userData.createUser(new User(username,  password, email,name));
+			
+		}
+		
+		// GET A USER = USERID
+		public List<User> getUser(String userID) {
+			UserData userData = UserData.getInstance();
+			return userData.getUser(userID);
+		}
+		email, novoEmail, password, novaPassword, username
+		
+
+		public void update(String email, String novoEmail, String password, String novaPassword, String username) {
+			UserData userData = UserData.getInstance();
+			userData.updateData(new User(email, name, password, username), new User(email, name, password, username));
+			
+		}
+
+		
+
+		
+
+}

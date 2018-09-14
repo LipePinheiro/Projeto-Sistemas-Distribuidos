@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Snippet</title>
+
+
+
+    <meta name="viewport" content="width=device-width , initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+
+    <!-- JS para pagina em geral -->
+    <script src="Script/index.js"></script>
+
+    <!-- Css -->
+    <link rel="stylesheet" href="CSS/estilizacao.css">
+
+    <script>
+        $(document).ready(function () {
+        	
+        	
+    		var url = "";	
+    		
+    			url = "http://localhost:8080/ExerciciosProgramacao/rest/exercises";
+    		
+    			
+    		var jqxhr = $.get(url, function() {
+    			  
+    		})
+    		 .done(function (data) {
+             	console.log(data);
+                 $("#tbl").empty();
+                 var trTemp = "";
+                 trTemp += "<tr><th colspan='8'>Snippets HTML</th></tr>";
+                 trTemp += "<tr><th>Data de Criação</th><th>Autor</th><th>Titulo</th><th>Explicação</th><th>Código</th><th>Linguagem</th><th>Output</th></tr>";
+                 $("#tbl").append(trTemp);
+
+                 $.each(data, function (i, obj) {
+                    
+                         trTemp = "<tr><td>" + obj.creationDate + "</td><td>" +
+                         obj.user.username + "</td><td>" +
+                         obj.title + "</td><td>" +
+                         obj.explanation + "</td><td>" +
+                         obj.solution.code + "</td><td>" +
+                         obj.solution.language + "</td><td>" +
+                         obj.solution.output + "</td><tr>";
+                         $("#tbl").append(trTemp);
+                 });
+
+             })
+             .fail(function () {
+                 alert("error");
+             });
+    		
+    		//Pesquisar exercicio por titulo
+    		
+    		$("#GetExercicio").click(function () {
+    			var category = $("#txtGetExercicio").val();
+
+    			//var mytitle = $("#txttitle").val()
+        			$.ajax({
+    				method: "GET",
+    				url:  "http://localhost:8080/ExerciciosProgramacao/rest/exercises/",  				
+    				data:{
+    					title:category
+    					}
+        			})
+    				.done(function (data) {
+                	console.log(data);
+                    $("#tbl").empty();
+                    var trTemp = "";
+                    trTemp += "<tr><th colspan='8'>Snippets HTML</th></tr>";
+                    trTemp += "<tr><th>Data de Criação</th><th>Autor</th><th>Titulo</th><th>Explicação</th><th>Código</th><th>Linguagem</th><th>Output</th></tr>";
+                    $("#tbl").append(trTemp);
+
+                    $.each(data, function (i, obj) {
+                       
+                            trTemp = "<tr><td>" + obj.creationDate + "</td><td>" +
+                            obj.user.username + "</td><td>" +
+                            obj.title + "</td><td>" +
+                            obj.explanation + "</td><td>" +
+                            obj.solution.code + "</td><td>" +
+                            obj.solution.language + "</td><td>" +
+                            obj.solution.output + "</td><tr>";
+                            
+                            $("#tbl").append(trTemp);
+                    });
+
+                })
+    				
+    			.fail(function (e) {
+    				alert("The exercise you were trying to delete doesn't exist, check the available activities and try again, or you don't have enough privileges to access this feature.");
+    			});
+    		});
+    		
+    		// Volta a mostrar todos
+    		$("#btnTodos").click(function () {
+    		
+    
+        		var url = "http://localhost:8080/ExerciciosProgramacao/rest/exercises";
+        		
+        			
+        		var jqxhr = $.get(url, function() {
+        			  
+        		})
+        		 .done(function (data) {
+                 	console.log(data);
+                     $("#tbl").empty();
+                     var trTemp = "";
+                     trTemp += "<tr><th colspan='8'>Snippets HTML</th></tr>";
+                     trTemp += "<tr><th>Data de Criação</th><th>Autor</th><th>Titulo</th><th>Explicação</th><th>Código</th><th>Linguagem</th><th>Output</th></tr>";
+                     $("#tbl").append(trTemp);
+
+                     $.each(data, function (i, obj) {
+                        
+                             trTemp = "<tr><td>" + obj.creationDate + "</td><td>" +
+                             obj.user.username + "</td><td>" +
+                             obj.title + "</td><td>" +
+                             obj.explanation + "</td><td>" +
+                             obj.solution.code + "</td><td>" +
+                             obj.solution.language + "</td><td>" +
+                             obj.solution.output + "</td><tr>";
+                       
+                             $("#tbl").append(trTemp);
+                     });
+
+                 })
+                 .fail(function () {
+                     alert("error");
+                 });
+    		});
+        });
+        
+
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container">
+       
+        <center>
+        <div class="row"  style="margin-top: 100px">
+            <h1>Exercícios</h1>
+
+        </div>
+    </center>
+       	<!-- NAVBAR -->
+		<nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="padding:10px;background-color:rgba(255,255,255,0.5)">
+			<div class="collapse navbar-collapse w3-container">
+
+				<ul class="nav navbar-nav">
+					
+					<a href="index.html">
+					<h1>
+							Exercícios de Programação
+					</h1>
+						</a>
+					
+				</ul>
+
+				<!-- Navegação -->
+				<ul class="nav navbar-nav navbar-right">
+		
+					<li>
+						<a class="page-scroll" href="exercicios.html">Exercicios</a>
+					</li>
+					<!-- Form Login -->
+					
+					<li id="loginnav" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<b>Login</b>
+							<span class="caret"></span>
+						</a>
+						<ul id="login-dp" class="dropdown-menu" style="width:200px;padding:5px">
+							<li>
+								<div class="row">
+									<div class="col-md-12">
+										<form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+											<div class="form-group">
+												<label for='username' class='sr-only'>Nome de Utilizador</label>
+												<input id='username' type='username' required='' placeholder='Username' class='form-control' name='username'>
+											</div>
+											<div class="form-group">
+												<label for='password' class='sr-only'>Palavra Passe</label>
+												<input id='password' type='password' required='' placeholder='Password' class='form-control' name='password'>
+											</div>
+											<div class='form-group'>
+												<button id="btnLog" class='btn btn-primary btn-block'>Iniciar Sessão</button>
+											</div>
+
+										</form>
+									</div>
+									<div class="bottom text-center">
+										Não Tens Conta?
+										<button class="btn btn-info btn-xs" id="registo">
+											<b>Regista-te Já!</b>
+										</button>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<!--Fim Login -->
+				</ul>
+			</div>
+		</nav>
+		<!-- Fim de navbar -->
+
+        
+        <div class="customHr" id="sugest" style="margin-top: 50px">.</div>
+
+        <div class="row">    
+           <div class="col-md-3">
+				<div class="form-group">
+				<h5>Pesquisar por titulo</h5>
+					<input id='txtGetExercicio' type='text' required='' placeholder='Titulo Do Exercicio' class='form-control' name='GetExercicio'>
+					<br>
+					<button type="button" id="GetExercicio">Pesquisar Exercicio</button>
+				</div>
+            </div>
+            <div class="col-md-3">
+            <br>
+            <br>
+            <h5></h5>
+					<button type="button" class="btn btn-default btn-sm" id="btnTodos">
+          <span class="glyphicon glyphicon-refresh" ></span> Mostrar Todos
+        </button>
+            </div>
+            
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+	<center>
+                <table id="tbl" border="1" style="width:100%;font-family: "Times New Roman", Times, serif;">
+                </table>
+</center>
+            </div>
+        </div>
+
+</body>
+
+</html>

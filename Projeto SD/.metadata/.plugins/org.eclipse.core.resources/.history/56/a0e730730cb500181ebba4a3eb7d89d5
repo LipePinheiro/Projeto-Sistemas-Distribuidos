@@ -1,0 +1,60 @@
+package com.exercicios.model;
+
+public class Exercise {
+	
+	public String creationDate;
+	public String title;	
+	public String explanation;
+	public String tags;
+	public Solutions solution;
+	public User user;
+
+	
+	public Exercise() {
+		
+	}
+	
+	public Exercise( String creationDate, User user, String title, String explanation, String tags, Solutions solution) {
+		super();
+		this.creationDate = creationDate;
+		this.title = title;
+		this.explanation = explanation;
+		this.tags = tags;
+		this.solution = solution;
+	
+	}
+	
+
+
+	public String getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getExplanation() {
+		return explanation;
+	}
+	public void setExplanation(String explanation) {
+		this.explanation = explanation;
+	}
+	public String getTags() {
+		return tags;
+	}
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+	public Solutions getSolution() {
+		return solution;
+	}
+	public void setSolution(Solutions solution) {
+		this.solution = solution;
+	}
+	
+}

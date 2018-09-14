@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="@Path(&quot;/search_user&quot;)&#x0D;&#x0A;&#x09;&#x09;@GET&#x0D;&#x0A;&#x09;&#x09;@Produces(MediaType.APPLICATION_JSON)&#x0D;&#x0A;&#x09;&#x09;public List&lt;Exercise&gt; getExercise(@PathParam(&quot;user&quot;) String user) {&#x0D;&#x0A;&#x09;&#x09;&#x09;ExerciseManager exerciseManager = ExerciseManager.getInstance();&#x09;&#x09;&#x0D;&#x0A;&#x09;&#x09;&#x09;if(user != null) {&#x0D;&#x0A;&#x09;&#x09;&#x09;return exerciseManager.getExercisesUser(user);&#x0D;&#x0A;&#x09;&#x09;&#x09;} &#x0D;&#x0A;&#x09;&#x09;&#x09;&#x09;return exerciseManager.getExercises(); " key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="@Path(&quot;/search_user&quot;)"/>
+			<item value="btnaddSnippet"/>
+			<item value="                    &#x09;console.log(data);"/>
+			<item value="slt1"/>
+			<item value="btnlog"/>
+			<item value="btnLog"/>
+			<item value="login"/>
+			<item value="tblS"/>
+		</list>
+		<list key="replacehistory">
+			<item value="btnAddExer"/>
+			<item value="tbl"/>
+			<item value="title"/>
+			<item value="tags"/>
+			<item value="codigo"/>
+			<item value="Explicacao"/>
+			<item value="titulo"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="336" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="454" key="DIALOG_HEIGHT"/>
+		<item value="1131" key="DIALOG_X_ORIGIN"/>
+		<item value="195" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>
