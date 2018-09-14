@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <user UserId="1">
+        <username>JPereira</username>
+        <password>12345</password>
+        <email>joao19@hotmail.com</email>
+        <name>João</name>
+        <surname>Pereira</surname>
+        <link>/users/jpereira</link>
+    </user>
+    <user UserId="2">
+        <username>Anocas</username>
+        <password>12345</password>
+        <email>aninha@gmail.com</email>
+        <name>Ana</name>
+        <surname>Gomes</surname>
+        <link>/users/anocas</link>
+    </user>
+    <user UserId="3">
+        <username>Gongas</username>
+        <password>12345</password>
+        <email>gongas@gmail.com</email>
+        <name>Gonçalo</name>
+        <surname>Castro</surname>
+        <link>/users/gongas</link>
+    </user>
+</users>
+

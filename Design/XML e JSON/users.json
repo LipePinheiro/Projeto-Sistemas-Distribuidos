@@ -1,0 +1,28 @@
+{
+    "users": [
+        {
+            "userID": "1",
+            "username": "JPereira",
+            "password": "12345",
+            "email": "joao19@hotmail.com",
+            "name": "João Pereira",
+            "link": "/users/jpereira"
+        },
+        {
+            "userID": "2",
+            "username": "Anocas",
+            "password": "12345",
+            "email": "aninha@gamil.com",
+            "name": "Ana Gomes",
+            "link": "/users/anocas"
+        },
+        {
+            "userID": "3",
+            "username": "Gongas",
+            "password": "12345",
+            "email": "gongas@gamil.com",
+            "name": "Gonçalo Castro",
+            "link": "/users/gongas"
+        }
+    ]
+}

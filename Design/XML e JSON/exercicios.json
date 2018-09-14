@@ -1,0 +1,33 @@
+{
+  "exercises": [
+    {
+      "exerciseId": "1",
+      "date": "10/08/2018 11:00",
+      "title": " Create Random Integers",
+      "dados": {
+        "users": [
+          {
+            "userId": "1",
+            "username": "JPereira",
+            "password": "12345",
+            "email": "joao19@hotmail.com",
+            "name": "João Pereira"
+          }
+        ],
+        "explanation": "Numero random!",
+        "tags": [
+          "javascrip",
+          "js",
+          "random",
+          "math"
+      ],
+        "solutions": [{
+            "codigo": "Math.floor(Math.random() * 10);",
+            "language": "JavaScript",
+            "input": "",
+            "output": "Hello JavaScript"
+        }]
+      }
+    }
+  ]
+}

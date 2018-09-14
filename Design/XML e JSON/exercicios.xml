@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<exercises>
+    <exercise exerciseId="1" date="10/08/2018 11:00">
+        <title>Criar um numero random inteiro</title>
+        <dados>
+            <users>
+                <user userId="1">
+                    <username>JPereira</username>
+                    <password>12345</password>
+                    <email>joao19@hotmail.com</email>
+                    <name>João</name>
+                    <surname>Pereira</surname>
+                </user>
+            </users>
+            <explanation>Numero random!</explanation>
+            <tags>
+                <tag>javascript, js, random, math</tag>
+            </tags>
+            <solutions>
+                <solution>
+                    <codigo>
+                        <![CDATA[Math.floor(Math.random() * 10); ]]>
+                    </codigo>
+                    <language>JavaScript</language>
+                    <input></input>
+                    <output>5</output>
+                </solution>
+            </solutions>
+        </dados>
+    </exercise>
+
+</exercises>
